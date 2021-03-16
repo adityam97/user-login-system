@@ -1,0 +1,22 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='/css/index.css') }}">
+  <title>Google login</title>
+</head>
+<body>
+  <h1>Flask Google user login</h1>
+  <div class="oauth-box">  
+    <div id="oauth-google">
+      <a href="{{ url_for('google_login') }}">
+        <img src="{{ url_for('static', filename='google_PNG19635.png') }}" 
+        width="55px" height="55px" alt="Google logo">
+      </a>
+    </div>
+    <div>
+      
+    </div>
+  </div>
+</body>
+</html>
