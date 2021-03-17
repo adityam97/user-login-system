@@ -11,6 +11,7 @@ from flask_mysqldb import MySQL
 from authlib.integrations.flask_client import OAuth
 from requests_oauthlib.compliance_fixes import facebook_compliance_fix
 import numpy
+import csv
 
 #creating Json file and reading it
 dbJson = open(r'mysql.json')
@@ -24,14 +25,20 @@ app = Flask(__name__)
 oauth = OAuth(app)
 #fb_app = flask.Flask(__name__)
 
+# with open("user_data.csv",'w',newline="") as csvfile:
+#     thewriter = csv.DictWriter(csvfile,fieldnames=fieldnames)
+#     thewriter.writeheader()
+
+
+
 app.secret_key="Adi"
 
-#db config for user login
-app.config['MYSQL_HOST'] = dbInfo["host"]
-app.config['MYSQL_USER'] = dbInfo["user"]
-app.config['MYSQL_PASSWORD'] = dbInfo["password"] 
-app.config['MYSQL_DB'] = dbInfo["DB"]
-print(app.config)
+# db config for user login
+# app.config['MYSQL_HOST'] = dbInfo["host"]
+# app.config['MYSQL_USER'] = dbInfo["user"]
+# app.config['MYSQL_PASSWORD'] = dbInfo["password"] 
+# app.config['MYSQL_DB'] = dbInfo["DB"]
+# print(app.config)
 
 #config for social login google
 app.config['SECRET_KEY'] = "THIS SHOULD BE SECRET"
@@ -65,7 +72,7 @@ google = oauth.register(
 )
 
 #initialize app
-mysql=MySQL(app)
+# mysql=MySQL(app)
 
 @app.route('/', methods = ['POST', 'GET'])
 def home():
