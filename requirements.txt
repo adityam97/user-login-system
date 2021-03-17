@@ -40,6 +40,6 @@ urllib3==1.26.4
 
 Werkzeug==1.0.1
 
-pandas==1.2.3
+pandas==1.1.5
 
-numpy==1.20.1
+numpy==1.19.1
