@@ -25,9 +25,9 @@ app = Flask(__name__)
 oauth = OAuth(app)
 #fb_app = flask.Flask(__name__)
 
-with open("user_data.csv",'w') as csvfile:
-    thewriter = csv.DictWriter(csvfile,fieldnames=fieldnames)
-    thewriter.writeheader()
+# with open("user_data.csv",'w') as csvfile:
+#     thewriter = csv.DictWriter(csvfile,fieldnames=fieldnames)
+#     thewriter.writeheader()
 
 
 
