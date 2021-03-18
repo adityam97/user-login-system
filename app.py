@@ -45,7 +45,7 @@ app.config['GOOGLE_CLIENT_SECRET'] = "lYfaygH0WrU5r_2my_JsEMXa"
 
 #config for social login fb
 #URL = "https://679e4c83.ngrok.io"
-URL = "https://userlogin-system.herokuapp.com"
+URL = "http://userlogin-system.herokuapp.com"
 
 FB_CLIENT_ID = "2943139639349740"
 FB_CLIENT_SECRET = "298ff3042528122514934545e7d4aad1"
