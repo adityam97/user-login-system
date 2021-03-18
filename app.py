@@ -27,7 +27,9 @@ fb_app = flask.Flask(__name__)
 
 #data_frame = pd.read_csv("user_data.csv","r")
 
-
+# with open('user_data.csv', mode='w') as csv_file:
+#     fieldnames = ['email', 'password']
+#     writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
 
 app.secret_key="Adi"
 
@@ -47,8 +49,8 @@ app.config['GOOGLE_CLIENT_SECRET'] = "lYfaygH0WrU5r_2my_JsEMXa"
 #URL = "https://679e4c83.ngrok.io"
 URL = "https://userlogin-system.herokuapp.com"
 
-FB_CLIENT_ID = "2943139639349740"
-FB_CLIENT_SECRET = "298ff3042528122514934545e7d4aad1"
+FB_CLIENT_ID = "870940717019310"
+FB_CLIENT_SECRET = "51fec30fd5b076f732c89b1000e8ee0e"
 FB_AUTHORIZATION_BASE_URL = "https://www.facebook.com/dialog/oauth"
 FB_TOKEN_URL = "https://graph.facebook.com/oauth/access_token"
 FB_SCOPE = ["email"]
