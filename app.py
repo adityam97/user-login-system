@@ -25,7 +25,7 @@ app = Flask(__name__)
 oauth = OAuth(app)
 fb_app = flask.Flask(__name__)
 
-#data_frame = pd.read_csv("user_data.csv")
+data_frame = pd.read_csv("user_data.csv")
 
 
 
@@ -45,7 +45,7 @@ app.config['GOOGLE_CLIENT_SECRET'] = "lYfaygH0WrU5r_2my_JsEMXa"
 
 #config for social login fb
 #URL = "https://679e4c83.ngrok.io"
-URL = "http://userlogin-system.herokuapp.com"
+URL = "https://userlogin-system.herokuapp.com"
 
 FB_CLIENT_ID = "2943139639349740"
 FB_CLIENT_SECRET = "298ff3042528122514934545e7d4aad1"
@@ -108,6 +108,8 @@ def success():
     else:
         return render_template('login.html')
 
+    data_frame.to_csv("user_data_new.csv")
+
 @app.route('/signupsuccess',methods = ['POST'])
 def signupsuccess():
     if request.method == 'POST' :
@@ -124,6 +126,7 @@ def signupsuccess():
     else:
         return render_template('login.html')
 
+    data_frame.to_csv("user_data_new.csv")
 @app.route("/profile",methods = ['POST', 'GET'])
 def user():
     if "user" in session:
