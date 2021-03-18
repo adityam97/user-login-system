@@ -23,11 +23,9 @@ dbInfo = json.loads(dbData)
 #initializing app
 app = Flask(__name__) 
 oauth = OAuth(app)
-#fb_app = flask.Flask(__name__)
+fb_app = flask.Flask(__name__)
 
-# with open("user_data.csv",'w') as csvfile:
-#     thewriter = csv.DictWriter(csvfile,fieldnames=fieldnames)
-#     thewriter.writeheader()
+#data_frame = pd.read_csv("user_data.csv")
 
 
 
@@ -70,6 +68,7 @@ google = oauth.register(
     userinfo_endpoint = 'https://openidconnect.googleapis.com/v1/userinfo',  # This is only needed if using openId to fetch user info
     client_kwargs = {'scope': 'openid email profile'},
 )
+
 
 #initialize app
 # mysql=MySQL(app)
