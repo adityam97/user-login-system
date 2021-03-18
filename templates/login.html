@@ -1,13 +1,33 @@
 <html>
    <body>
       <form action = "/success" method = "post">
-         <p>Enter email:</p>
-         <p><input type = "email" name = "email" placeholder="Enter Email"/></p>
+         <!-- rm action = "/signsuccess" method = "post"> -->
+         {% if login %}
+         <h1> Passsword not matched</h1>
+         <p>Enter Email Address:</p>
+         <p><input type = "email" name = "email" placeholder="Enter Email" /></p>
          enter password:
          <p><input type = "password" name = "password" placeholder="Enter Password"/></p>
 
-         <p><input type = "submit" value = "submit" /></p>
-         <a href='/signup'>
+         <button type = "submit" value = "Sign Up" >
+            {% elif lol %}
+         <h1>User not exist</h1>
+         <p>Enter Email Address:</p>
+         <p><input type = "email" name = "email" placeholder="Enter Email" /></p>
+         enter password:
+         <p><input type = "password" name = "password" placeholder="Enter Password"/></p>
+
+         <button type = "submit" value = "Sign Up" >
+            {% else %}
+
+         <p>Enter email:</p>
+         <p><input type = "email" name = "email" placeholder="Enter Email"/></p>
+         enter password:
+         <input type = "password" name = "password" placeholder="Enter Password"/>
+
+         <button type = "submit" value="Login"></button>
+         {% endif %}
+         <!-- <a href='/signup'> -->
             
         </a>
       </form>

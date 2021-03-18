@@ -91,6 +91,7 @@ def signup():
 
 @app.route('/success', methods = ['POST'])
 def success():
+    email = set()
     if request.method == 'POST':
         user = request.form['email']
         #email = request.form['email']
@@ -100,29 +101,30 @@ def success():
         # print(password)
         #mycursor.execute("select * from new_table where email = '" + user + "' and password = '" + password + "'")
         
-        #data = mycursor.fetchone()
+        data = pd.read_csv("data.csv")
         #print(data)
         #mysql.connection.commit()
-        
-        if data is None:
-            return render_template('base.html')
+        print(user,password)
+        for i in data["emailid"]:
+            email.add(i)
+        if user in email:
+            pwd = data["password"].loc[data["emailid"]==user].iloc[0]
+            print("password from user",str(password))
+            print("password from database",str(pwd))
+            if str(pwd) == password:
+                return render_template("profile.html")
+            else:
+                login = True
+                return render_template("login.html", login=login)
         else:
-            session['user'] = user
-            return redirect(url_for('user'))
-            with open ("data.csv", "a") as csvfile:
-                writer = csv.writer(csvfile, delimiter = ",")
-                writer.writerow([user,password])   
-        #return render_template('success.html')
-        
-    
-    else:
-        return render_template('login.html')
+            lol = True
+            return render_template("login.html",lol=lol)
+    # return "success"
 
-    #data_frame.to_csv("user_data_new.csv")
 
-@app.route('/signupsuccess',methods = ['POST'])
-def signupsuccess():
-    if request.method == 'POST' :
+@app.route('/signsuccess', methods = ['POST','GET'])
+def signsuccess():
+    if request.method == 'POST':
 
         email = request.form['email']
         password = request.form['password']
@@ -137,7 +139,8 @@ def signupsuccess():
             email = email
             password = password
             writer.writerow([email,password])
-        return redirect(url_for('login'))   
+        
+        return redirect(url_for('login'))
        
         #return render_template('success.html')
     else:
@@ -226,4 +229,4 @@ def callback():
     
 
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(debug=True)
