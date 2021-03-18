@@ -25,11 +25,10 @@ app = Flask(__name__)
 oauth = OAuth(app)
 fb_app = flask.Flask(__name__)
 
-#data_frame = pd.read_csv("user_data.csv","r")
 
-# with open('user_data.csv', mode='w') as csv_file:
-#     fieldnames = ['email', 'password']
-#     writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+
+data_frame = pd.read_csv("data.csv")
+
 
 app.secret_key="Adi"
 
@@ -94,20 +93,25 @@ def success():
         user = request.form['email']
         #email = request.form['email']
         password = request.form['password']
-        mycursor = mysql.connection.cursor()
+        #mycursor = mysql.connection.cursor()
         # print(email)
         # print(password)
-        mycursor.execute("select * from new_table where email = '" + user + "' and password = '" + password + "'")
+        #mycursor.execute("select * from new_table where email = '" + user + "' and password = '" + password + "'")
         
-        data = mycursor.fetchone()
-        print(data)
-        mysql.connection.commit()
+        #data = mycursor.fetchone()
+        #print(data)
+        #mysql.connection.commit()
+        
         if data is None:
             return render_template('base.html')
         else:
             session['user'] = user
             return redirect(url_for('user'))   
         #return render_template('success.html')
+        with open ("data.csv", "a") as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerow([email,password])
+    
     else:
         return render_template('login.html')
 
@@ -119,16 +123,22 @@ def signupsuccess():
 
         email = request.form['email']
         password = request.form['password']
-        mycursor = mysql.connection.cursor()
-        mycursor.execute("insert into new_table(email,password) values(%s,%s)", (email, password))
-        mysql.connection.commit()
+        #mycursor = mysql.connection.cursor()
+        #mycursor.execute("insert into new_table(email,password) values(%s,%s)", (email, password))
+        #mysql.connection.commit()
         print("success")
         session['user'] = email
+
+        with open ("data.csv", "a") as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerow([email,password])
+        
         return redirect(url_for('login'))   
         #return render_template('success.html')
     else:
         return render_template('login.html')
 
+    
     #data_frame.to_csv("user_data_new.csv")
 @app.route("/profile",methods = ['POST', 'GET'])
 def user():
@@ -191,7 +201,24 @@ def callback():
         client_secret=FB_CLIENT_SECRET,
         authorization_response=flask.request.url,
         #return "You are successfully signed in using facebook"
+        
     )
+    facebook_user_data = facebook.get(
+        "https://graph.facebook.com/me?fields=id,name,email,picture{url}"
+    ).json()
+
+    email = facebook_user_data["email"]
+    name = facebook_user_data["name"]
+    picture_url = facebook_user_data.get("picture", {}).get("data", {}).get("url")
+
+    return f"""
+    User information: <br>
+    Name: {name} <br>
+    Email: {email} <br>
+    Avatar <img src="{picture_url}"> <br>
+    <a href="/">Home</a>
+    """
+    
 
 if __name__ == '__main__':
-    app.run("127.0.0.1","8000")
+    app.run(debug=True)

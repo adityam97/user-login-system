@@ -54,21 +54,21 @@ def callback():
 
     # Fetch a protected resource, i.e. user profile, via Graph API
 
-    # facebook_user_data = facebook.get(
-    #     "https://graph.facebook.com/me?fields=id,name,email,picture{url}"
-    # ).json()
+    facebook_user_data = facebook.get(
+        "https://graph.facebook.com/me?fields=id,name,email,picture{url}"
+    ).json()
 
-    # email = facebook_user_data["email"]
-    # name = facebook_user_data["name"]
-    # picture_url = facebook_user_data.get("picture", {}).get("data", {}).get("url")
+    email = facebook_user_data["email"]
+    name = facebook_user_data["name"]
+    picture_url = facebook_user_data.get("picture", {}).get("data", {}).get("url")
 
-    # # return f"""
-    # User information: <br>
-    # Name: {name} <br>
-    # Email: {email} <br>
-    # Avatar <img src="{picture_url}"> <br>
-    # <a href="/">Home</a>
-    # """
+    # return f"""
+    User information: <br>
+    Name: {name} <br>
+    Email: {email} <br>
+    Avatar <img src="{picture_url}"> <br>
+    <a href="/">Home</a>
+    """
 
 
 if __name__ == "__main__":
