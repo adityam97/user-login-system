@@ -25,7 +25,7 @@ app = Flask(__name__)
 oauth = OAuth(app)
 fb_app = flask.Flask(__name__)
 
-data_frame = pd.read_csv("user_data.csv")
+#data_frame = pd.read_csv("user_data.csv","r")
 
 
 
@@ -108,7 +108,7 @@ def success():
     else:
         return render_template('login.html')
 
-    data_frame.to_csv("user_data_new.csv")
+    #data_frame.to_csv("user_data_new.csv")
 
 @app.route('/signupsuccess',methods = ['POST'])
 def signupsuccess():
@@ -126,7 +126,7 @@ def signupsuccess():
     else:
         return render_template('login.html')
 
-    data_frame.to_csv("user_data_new.csv")
+    #data_frame.to_csv("user_data_new.csv")
 @app.route("/profile",methods = ['POST', 'GET'])
 def user():
     if "user" in session:
