@@ -27,7 +27,9 @@ fb_app = flask.Flask(__name__)
 
 
 
-data_frame = pd.read_csv("data.csv")
+#data_frame = pd.read_csv("data.csv")
+
+  
 
 
 app.secret_key="Adi"
@@ -106,11 +108,12 @@ def success():
             return render_template('base.html')
         else:
             session['user'] = user
-            return redirect(url_for('user'))   
+            return redirect(url_for('user'))
+            with open ("data.csv", "a") as csvfile:
+                writer = csv.writer(csvfile, delimiter = ",")
+                writer.writerow([user,password])   
         #return render_template('success.html')
-        with open ("data.csv", "a") as csvfile:
-            writer = csv.writer(csvfile)
-            writer.writerow([email,password])
+        
     
     else:
         return render_template('login.html')
@@ -126,14 +129,16 @@ def signupsuccess():
         #mycursor = mysql.connection.cursor()
         #mycursor.execute("insert into new_table(email,password) values(%s,%s)", (email, password))
         #mysql.connection.commit()
-        print("success")
+        # print("success")
         session['user'] = email
-
+    
         with open ("data.csv", "a") as csvfile:
             writer = csv.writer(csvfile)
+            email = email
+            password = password
             writer.writerow([email,password])
-        
         return redirect(url_for('login'))   
+       
         #return render_template('success.html')
     else:
         return render_template('login.html')
@@ -221,4 +226,4 @@ def callback():
     
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
