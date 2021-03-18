@@ -14,11 +14,11 @@ import numpy
 import csv
 
 #creating Json file and reading it
-dbJson = open(r'mysql.json')
-dbData = dbJson.read()
+# dbJson = open(r'mysql.json')
+# dbData = dbJson.read()
 
-#parse json
-dbInfo = json.loads(dbData)
+# #parse json
+# dbInfo = json.loads(dbData)
 
 #initializing app
 app = Flask(__name__) 
