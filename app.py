@@ -189,8 +189,6 @@ def user_details():
     print(session["user"])
     
     if request.method == "POST":
-        
-
         userDetails = request.form
         userDetails = userDetails.to_dict()
         print("before username and email", userDetails)
@@ -200,6 +198,9 @@ def user_details():
         user = session['user'] 
         userDetails['email'] = user
 
+
+        
+        
         print(userDetails["email"])
 
         print(userDetails)
