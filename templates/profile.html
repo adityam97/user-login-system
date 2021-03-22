@@ -1,20 +1,34 @@
 <body>'
-<h2>Youre logged in Please fill up some details</h2>
-<form action = "/1_details" method = "post">
-         
+<h2>Welcome {{username}}, Please fill up some details</h2>
+<form action = "/user_details" method = "post">
+    
     <p>City:</p>
-    <p><input type = "city" name = "city" placeholder="Enter city" /></p>
+    <p><input type = "city" name = "city" placeholder="Enter city" required/></p>
     State:
-    <p><input type = "state" name = "state" placeholder="Enter state"/></p>
+    <p><input type = "state" name = "state" placeholder="Enter state" required/></p>
     Contact:
-    <p><input type = "state" name = "state" placeholder="Enter number"/></p>
-    <p><input type = "state" name = "state" placeholder="Enter number"/></p>
-    <p><input type = "state" name = "state" placeholder="Enter number"/></p>
+    <p><input type = "num" name = "num" placeholder="Enter number" required/></p>
+    <p><input type = "num" name = "num2" placeholder="Enter number"/></p>
+    <p><input type = "num" name = "num3" placeholder="Enter number"/></p>
 
-    <p><input type = "submit" ></p>
+    <p>primary:</p>
+        <p><input type = "text" name = "school" required /></p>
+        secondary:
+        <p><input type = "text" name = "clg" required/></p>
+        
+        <button><input type = "submit" value = "submit" ></button>
+        <a href = '/download' >download file</a>
+        <br>
+        <a href = '/'> Go to home </a>
+
+   
+
+        <br>
 
 
+
+    <a href="/" >LOGOUT</a>
  </form>
 </body>
-<!-- <a href="/" >Logout</a> -->
+
 </body>

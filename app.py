@@ -6,7 +6,7 @@ import os
 import json
 import requests_oauthlib
 import pandas as pd
-from flask import Flask, render_template, request,session, url_for, redirect
+from flask import Flask, render_template, request,session, url_for, redirect, send_file
 from flask_mysqldb import MySQL
 from authlib.integrations.flask_client import OAuth
 from requests_oauthlib.compliance_fixes import facebook_compliance_fix
@@ -93,6 +93,8 @@ def signup():
 def success():
     email = set()
     if request.method == 'POST':
+
+        # username = request.form['username']
         user = request.form['email']
         #email = request.form['email']
         password = request.form['password']
@@ -104,15 +106,22 @@ def success():
         data = pd.read_csv("data.csv")
         #print(data)
         #mysql.connection.commit()
-        print(user,password)
+        # print(username,emailid,password)
+
+        
         for i in data["emailid"]:
             email.add(i)
         if user in email:
             pwd = data["password"].loc[data["emailid"]==user].iloc[0]
+        
             print("password from user",str(password))
             print("password from database",str(pwd))
+            
             if str(pwd) == password:
-                return render_template("profile.html")
+                username = data['username'].loc[data['emailid'] == user].iloc[0]
+                session['user'] = user
+                session['username'] = username
+                return render_template("profile.html", username = session['username'])
             else:
                 login = True
                 return render_template("login.html", login=login)
@@ -126,6 +135,7 @@ def success():
 def signsuccess():
     if request.method == 'POST':
 
+        username = request.form['username']
         email = request.form['email']
         password = request.form['password']
         #mycursor = mysql.connection.cursor()
@@ -133,12 +143,14 @@ def signsuccess():
         #mysql.connection.commit()
         # print("success")
         session['user'] = email
-    
+        print(username)
+        print(session["user"])
         with open ("data.csv", "a") as csvfile:
             writer = csv.writer(csvfile)
             email = email
             password = password
-            writer.writerow([email,password])
+            username = username
+            writer.writerow([username, email, password])
         
         return redirect(url_for('login'))
        
@@ -147,12 +159,13 @@ def signsuccess():
         return render_template('login.html')
 
     
-    #data_frame.to_csv("user_data_new.csv")
+    
 @app.route("/profile",methods = ['POST', 'GET'])
 def user():
     if "user" in session:
-       user = session['user']
-       return render_template('profile.html', content = user)
+        # print(session["user"])
+        user = session['user']
+        return render_template('profile.html', content = user)
     else:
        return render_template('login.html')
 
@@ -165,6 +178,46 @@ def logout():
     else:
         return '<p>User already logged out</p>'
 
+# def write_json (data, filename = "details.json"):
+#     with open (filename, "w") as f:
+#         json.dump(data, f, indent=4)
+
+global  userDetails 
+userDetails = {}
+@app.route("/user_details", methods = ['POST','GET'])
+def user_details():
+    print(session["user"])
+    
+    if request.method == "POST":
+        
+
+        userDetails = request.form
+        userDetails = userDetails.to_dict()
+        print("before username and email", userDetails)
+        userDetails['user'] = session['username']
+        print(userDetails["user"])
+
+        user = session['user'] 
+        userDetails['email'] = user
+
+        print(userDetails["email"])
+
+        print(userDetails)
+
+        if not userDetails["num2"]:
+            del userDetails["num2"]
+        if not userDetails["num3"]:
+            del userDetails["num3"]
+
+        with open ('details.json','w') as f:
+                json.dump(userDetails, f)
+
+    return redirect('/download')
+
+@app.route("/download")
+def download():
+    obj ='details.json'
+    return send_file(obj, as_attachment = True)
 
 #google login 
 @app.route('/login/google')
